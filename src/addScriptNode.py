@@ -4,13 +4,21 @@ Created on Jan 20, 2015
 @author: qurban.ali
 '''
 import pymel.core as pc
+import maya.cmds as mc
 import appUsageApp
 
 __NODE_NAME__ = 'ICE_SCRIPT_NODE'
 
 __SCRIPT__ = '''
 import pymel.core as pc
-
+for refNode in pc.ls(type=pc.nt.Reference):
+    try:
+        fNode = pc.FileReference(refNode)
+        if fNode.isLoaded():
+            fNode.load()
+            
+    except:
+        pass
 for node in pc.ls(type=pc.nt.File):
         node.fileTextureName.set(node.fileTextureName.get().replace('\\\\', '/'))
 '''
